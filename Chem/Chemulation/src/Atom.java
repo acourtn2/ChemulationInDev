@@ -19,7 +19,7 @@ public class Atom {
 		this.atomicWeight = atomicWeight;
 		this.electroNeg = electroNeg;
 		this.atomName = atomName;
-		adjacentBonds = null;;
+		adjacentBonds = null;
 	}
 	public Atom(int vertexNum, int atomicNum, double atomicWeight, double electroNeg, String atomName,ArrayList<Bond> adjacentBonds){
 		this.atomicNum = atomicNum;

@@ -45,13 +45,17 @@ public class Molecule {
 			return "Null found for atomList";
 		}
 		for(Atom a :atomList){
-			temp = temp.concat(a.toString());
+			temp = temp.concat(a.toString()) + "\n";
 		}
 		if(bondList == null){
 			return "Null found for bondList";
 		}
+		if(bondList.isEmpty()){
+			temp += " bondList is empty"; 
+			//return "bondList is empty";
+		}
 		for(Bond b : bondList){
-			temp = temp.concat(b.toString());
+			temp = temp.concat(b.toString()) + "\n";
 		}
 		return temp;
 	}
