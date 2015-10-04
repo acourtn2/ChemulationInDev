@@ -12,15 +12,15 @@ public class Bond {
 		weight = -1;
 		adjacentAtoms = null;
 	}
-	public Bond(int bondType, int edgeNum, boolean exist, double weight){
+	public Bond(int edgeNum, int bondType, boolean exist, double weight){
 		this.bondType = bondType;
 		this.edgeNum = edgeNum;
 		this.exist = exist;
 		this.weight = weight;
-		adjacentAtoms = null;
+		adjacentAtoms = new ArrayList<Atom>(0);
 	}
 	
-	public Bond(int bondType, int edgeNum, boolean exist, double weight, ArrayList<Atom> adjacentAtoms){
+	public Bond(int edgeType, int bondType, boolean exist, double weight, ArrayList<Atom> adjacentAtoms){
 		this.bondType = bondType;
 		this.edgeNum = edgeNum;
 		this.exist = exist;
@@ -31,7 +31,7 @@ public class Bond {
 	public int getBondType(){
 		return bondType;
 	}
-	public void setBondType(int bondType){
+	public void setBondType(int bondType){ // 1 is single, 2 is double, 3 is triple, 4 is electron pair, 5 is lone electron, -1 is error
 		this.bondType = bondType;
 	}
 	public int getEdgeNum (){
@@ -55,16 +55,19 @@ public class Bond {
 	public ArrayList<Atom>  getAdjacentAtoms(){
 		return adjacentAtoms;
 	}
+	public void addAdjacentAtoms(Atom inAtom){
+		adjacentAtoms.add(inAtom);
+	}
 	public void setAdjacentAtoms (ArrayList<Atom> adjacentAtoms){
 		this.adjacentAtoms = adjacentAtoms;
 	}
 	public String toString(){
-		String temp = ("bondType: " + bondType + " edgeNum: " + edgeNum + " exist: " + exist + " weight: " + weight);
+		String temp = ("edgeNum: " + edgeNum + " bondType: " + bondType + " exist: " + exist + " weight: " + weight);
 		if(adjacentAtoms == null){
 			return temp;
 		}
 		for(Atom a: adjacentAtoms){
-			temp.concat(a.toString());
+			temp +=  " " + a.getVertexNum() + "\n";
 		}
 		return temp;
 	}
