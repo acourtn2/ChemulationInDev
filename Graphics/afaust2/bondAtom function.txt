@@ -1,0 +1,12 @@
+function bondAtom(atomA,atomB,scene) {
+    var x = (atomA.position.x-atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var height = Math.sqrt((x*x)+(y*y));
+    var geometry = new THREE.CylinderGeometry(20,20,height);
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var cylinder = new THREE.Mesh(geometry,material);
+    cylinder.position.x = (atomA.position.x + atomB.position.x)/2;
+    cylinder.position.y = (atomA.position.y + atomB.position.y)/2;
+    cylinder.rotation.z = Math.atan(-x/y);
+    scene.add(cylinder);
+}

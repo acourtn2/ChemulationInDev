@@ -1,0 +1,12 @@
+function moveAtom(atom,EpositionX,EpositionY,resistance)
+{
+
+    if(atom.position.x != EpositionX)
+    {
+        atom.position.x += (EpositionX-atom.position.x)/(resistance);
+    }
+    if(atom.position.y !=EpositionY)
+    {
+        atom.position.y += (EpositionY-atom.position.y)/(resistance);
+    }
+}

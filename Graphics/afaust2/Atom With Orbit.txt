@@ -1,0 +1,116 @@
+var camera, scene, renderer;
+var geometry, material, mesh;
+var geometry2,mesh2,geometry3,mesh3,mesh4,mesh5;
+
+init();
+animate();
+
+function init() {
+
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.z = 1000;
+
+    scene = new THREE.Scene();
+
+   // var Shape s = Shape.arc(0,0,200,0,2*3.14159,clockwise);
+    geometry = new THREE.SphereGeometry(75, 200, 200);
+    geometry2 = new THREE.SphereGeometry(30, 200, 200);
+    geometry3 = new THREE.SphereGeometry(30,200,200);
+    material = new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        wireframe: true
+    });
+
+    mesh = new THREE.Mesh(geometry, material);
+    mesh2 = new THREE.Mesh(geometry2, material);
+    mesh3 = new THREE.Mesh(geometry3, material);
+    mesh4 = new THREE.Mesh(geometry3,material);
+    mesh5 = new THREE.Mesh(geometry3,material);
+    mesh2.translateX(400);
+    mesh3.translateX(200);
+    mesh4.translateX(600);
+    mesh5.translateX(800);
+    scene.add(mesh);
+	scene.add(mesh2);
+    scene.add(mesh3);
+    scene.add(mesh4);
+    scene.add(mesh5);
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    document.body.appendChild(renderer.domElement);
+
+}
+
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    if(mesh3.position.x !=-200 && mesh3.position.y>=0)
+    {
+    mesh3.position.x -= 5;
+    mesh3.position.setY( Math.sqrt(40000-	      Math.pow(mesh3.position.x,2)));
+    }
+    if(mesh3.position.x == -200)
+    {
+        mesh3.position.setY(-(Math.sqrt(40000-	      Math.pow(mesh3.position.x+.001,2))))
+    }
+    if(mesh3.position.y<0)
+    {
+        mesh3.position.x +=5;
+    	mesh3.position.setY(-(Math.sqrt(40000-	      Math.pow(mesh3.position.x,2))))
+    }
+     
+    
+    
+    
+    if(mesh2.position.x!=-400 && mesh2.position.y<=0)
+    {
+    mesh2.position.x -=5;
+    mesh2.position.setY(-(Math.sqrt(160000 - Math.pow(mesh2.position.x,2))))
+    } 
+    if(mesh2.position.x == -400)
+    {
+        mesh2.position.setY((Math.sqrt(160000-	      Math.pow(mesh2.position.x+.001,2))))
+    }
+          if(mesh2.position.y>0)
+        {
+             mesh2.position.x +=5;
+            mesh2.position.setY((Math.sqrt(160000-	      Math.pow(mesh2.position.x,2))));
+        }
+    
+    
+        if(mesh4.position.x !=-600 && mesh4.position.y>=0)
+    {
+    mesh4.position.x -= 5;
+    mesh4.position.setY( Math.sqrt(360000-	      Math.pow(mesh4.position.x,2)));
+    }
+    if(mesh4.position.x == -600)
+    {
+        mesh4.position.setY(-(Math.sqrt(360000-	      Math.pow(mesh4.position.x+.001,2))))
+    }
+    if(mesh4.position.y<0)
+    {
+        mesh4.position.x +=5;
+    	mesh4.position.setY(-(Math.sqrt(360000-	      Math.pow(mesh4.position.x,2))))
+    }
+    
+    
+        if(mesh5.position.x!=-800 && mesh5.position.y<=0)
+    {
+    mesh5.position.x -=5;
+    mesh5.position.setY(-(Math.sqrt(640000 - Math.pow(mesh5.position.x,2))))
+    } 
+    if(mesh5.position.x == -800)
+    {
+        mesh5.position.setY((Math.sqrt(640000-	      Math.pow(mesh5.position.x+.001,2))))
+    }
+          if(mesh5.position.y>0)
+        {
+             mesh5.position.x +=5;
+            mesh5.position.setY((Math.sqrt(640000-	      Math.pow(mesh5.position.x,2))));
+        }
+
+    renderer.render(scene, camera);
+    
+}
