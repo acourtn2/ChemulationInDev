@@ -99,7 +99,6 @@ public class MoleculeIUPACtoGraph{
 					base = (temp.substring(0,beforeOH) + (getPrefix(getPrefixNum(base))) + "ane" + base.substring(afterOH));
 				}
 			//	base = (temp.substring(0,) + (getPrefix(getPrefixNum(base))) + "ane" + base.substring(afterOH));
-				System.out.println(base);
 				sections.set(4, (new ArrayList<>(Arrays.asList(Integer.toString(locOfOH)))));
 			}
 		}
@@ -115,6 +114,7 @@ public class MoleculeIUPACtoGraph{
 			ifSections.set(2,true);
 		}
 		if(toWorkString.contains("ol")){
+			ifSections.set(0, true);
 			ifSections.set(4, true);
 			ifSections.set(6, true);
 		}
@@ -133,9 +133,11 @@ public class MoleculeIUPACtoGraph{
 	
 	public void sectionWorker(){
 		for(int i = 0; i < sections.size(); i++){
+			
 			ArrayList<String> working = sections.get(i);
 			if(i == 0){ //base section, or the origin "molecule"
 				String base = working.get(i);
+
 				if(ifSections.get(0)){
 					int numAtoms = getPrefixNum(base.substring(0, (base.indexOf("ane"))));
 					for(int j = 0; j < numAtoms; j++){
@@ -215,7 +217,6 @@ public class MoleculeIUPACtoGraph{
 						numAtoms = getPrefixNum(base.substring(0, (base.indexOf("yne"))));
 					}
 					
-					System.out.println(tBondPos);
 					for(int j = 0; j < numAtoms; j++){
 						if(aList == null)
 						{
@@ -244,11 +245,12 @@ public class MoleculeIUPACtoGraph{
 					}
 					bList.get(tBondPos).setBondType(3);
 				}
+			
 			}
 			
 			if(i == 4){ // this deals with small  of alcohol
 				for(int j = 0; j < working.size(); j++){
-					
+					System.out.println("dBond on atom : " + Integer.parseInt(working.get(j)));
 					aList.add(new Atom(aList.size(), 8, 15.99, 2.0, "Oxygen"));
 					aList.add(new Atom(aList.size(), 1, 1.0079, 2.0, "Hydrogen"));
 					Bond oxyHydBond = new Bond(bList.size(), 1, true, 1);
@@ -256,7 +258,10 @@ public class MoleculeIUPACtoGraph{
 					oxyHydBond.addAdjacentAtoms(aList.get(aList.size() -2));
 					oxyHydBond.addAdjacentAtoms(aList.get(aList.size() -1));
 					oxyCarBond.addAdjacentAtoms(aList.get(aList.size() -2));
-					oxyCarBond.addAdjacentAtoms(aList.get(Integer.parseInt(working.get(j))));
+					oxyCarBond.addAdjacentAtoms(aList.get(Integer.parseInt(working.get(j))-1));
+					bList.add(oxyHydBond);
+					bList.add(oxyCarBond);
+					
 				}
 			}
 		}

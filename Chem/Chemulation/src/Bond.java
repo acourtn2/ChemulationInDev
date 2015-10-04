@@ -67,7 +67,7 @@ public class Bond {
 			return temp;
 		}
 		for(Atom a: adjacentAtoms){
-			temp.concat(a.toString());
+			temp +=  " " + a.getVertexNum() + "\n";
 		}
 		return temp;
 	}
