@@ -1,4 +1,6 @@
-function placeAtom(radius,symbol,xStart,yStart,zStart,scene) {
+//this creates an atom without doing anything on the screen. It will return the mesh that is the atom but nothing will show up 
+function createAtom(xStart,yStart,zStart,radius)
+{
     sphere = new THREE.SphereGeometry(radius,200,200);
     material = new THREE.MeshBasicMaterial({
         color: 0xff0000,
@@ -8,6 +10,5 @@ function placeAtom(radius,symbol,xStart,yStart,zStart,scene) {
     atom.translateX(xStart);
     atom.translateY(yStart);
     atom.translateZ(zStart);
-    scene.add(atom);
     return atom;
 }

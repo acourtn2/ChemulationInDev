@@ -1,0 +1,13 @@
+function tetrahedral(startX,startY,startZ,bondLen,bondThick,radius,scene)
+{
+    var atomA = placeAtom(50,"",startX,startY,startZ,scene);
+    var atomB =  placeAtom(50,"",startX,startY+bondLen,startZ,scene);
+    var atomC = placeAtom(50,"",startX,startY+(-1*Math.sin(0.5148721)*bondLen),startZ+(-1*Math.cos(0.5148721)*bondLen),scene);
+    var atomD = placeAtom(50,"",startX+Math.cos(0.523599)*Math.cos(0.5148721)*bondLen,startY+(-1*Math.sin(0.5148721)*bondLen),startZ+Math.sin(0.523599)*Math.cos(0.5148721)*bondLen,scene);
+    var atomE = placeAtom(50,"",startX+(-1*Math.cos(0.523599)*Math.cos(0.5148721)*bondLen),startY+(-1*Math.sin(0.5148721)*bondLen),startZ+Math.sin(0.523599)*Math.cos(0.5148721)*bondLen,scene);
+    var bondA = bondAtom(atomA,atomB,bondThick,scene);
+   var bondB =  bondAtom(atomA,atomC,bondThick,scene);
+   var bondC =  bondAtom(atomA,atomD,bondThick,scene);
+   var bondD =  bondAtom(atomA,atomE,bondThick,scene);
+    
+}

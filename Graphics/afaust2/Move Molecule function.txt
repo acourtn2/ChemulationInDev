@@ -1,0 +1,24 @@
+//moves the first atom in the list to the specified position and the rest will follow it
+function moveMolecule(species,EpositionX,EpositionY,EpositionZ,resistance) {
+    if(species[0].position.x != EpositionX)
+    {
+        for(var i = 0;i<species.length;i++)
+        {
+        species[i].position.x += (EpositionX-species[0].position.x)/(resistance);
+    }
+    }
+    if(species[0].position.y !=EpositionY)
+    {
+        for(var i = 0; i<species.length;i++)
+        {
+        species[i].position.y += (EpositionY-species[0].position.y)/(resistance);
+    }	
+    }
+    if(species[0].position.z !=EpositionZ)
+    {
+         for(var i = 0; i<species.length;i++)
+   		 {
+         	species[i].position.z += (EpositionZ-species[0].position.z)/(resistance)
+                }
+     }
+}

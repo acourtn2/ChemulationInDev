@@ -1,0 +1,9 @@
+function linear(startX,startY,startZ,bondLen,bondThick,radius,scene)
+{
+    var atomA = placeAtom(radius,"",startX,startY,startZ,scene);
+    var atomB = placeAtom(radius,"",startX+bondLen,startY,startZ,scene);
+    var atomC = placeAtom(radius,"",startX-bondLen,startY,startZ,scene);
+    var bondA = bondAtom(atomA,atomB,bondThick,scene);
+    var bondB = bondAtom(atomA,atomC,bondThick,scene);
+    return [atomA,atomB,atomC,bondA,bondB];
+}

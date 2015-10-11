@@ -1,0 +1,25 @@
+function doubleBondAtom(atomA,atomB,thickness,scene)
+{
+    var x = (atomA.position.x-atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    var height = Math.sqrt((x*x)+(y*y)+(z*z));
+    var geometry = new THREE.CylinderGeometry(thickness/3,thickness/3,height);
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var cylinder = new THREE.Mesh(geometry,material);
+    var cylinder2 = new THREE.Mesh(geometry,material);
+    cylinder.position.x = ((atomA.position.x + atomB.position.x)/2)+thickness;
+    cylinder.position.y = ((atomA.position.y + atomB.position.y)/2)+thickness;
+    cylinder.position.z = (atomA.position.z + atomB.position.z)/2;
+    cylinder.rotation.z = Math.atan(-x/y);
+    cylinder.rotation.x = Math.atan(z/y);
+    
+        cylinder2.position.x = ((atomA.position.x + atomB.position.x)/2)-thickness;
+    cylinder2.position.y = ((atomA.position.y + atomB.position.y)/2)-thickness;
+    cylinder2.position.z = (atomA.position.z + atomB.position.z)/2;
+    cylinder2.rotation.z = Math.atan(-x/y);
+    cylinder2.rotation.x = Math.atan(z/y);
+    scene.add(cylinder2);
+    scene.add(cylinder);
+    return cylinder;
+}

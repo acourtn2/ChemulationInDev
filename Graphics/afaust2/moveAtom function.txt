@@ -1,4 +1,4 @@
-function moveAtom(atom,EpositionX,EpositionY,resistance)
+function moveAtom(atom,EpositionX,EpositionY,EpositionZ,resistance)
 {
 
     if(atom.position.x != EpositionX)
@@ -8,5 +8,9 @@ function moveAtom(atom,EpositionX,EpositionY,resistance)
     if(atom.position.y !=EpositionY)
     {
         atom.position.y += (EpositionY-atom.position.y)/(resistance);
+    }
+    if(atom.position.z != EpositionZ)
+    {
+        atom.position.z +=(EpositionZ-atom.position.z)/(resistance);
     }
 }
