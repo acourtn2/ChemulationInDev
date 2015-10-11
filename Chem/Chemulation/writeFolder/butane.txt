@@ -1,0 +1,17 @@
+butane
+Atoms
+vertexNum: 0 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 1 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 2 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 3 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 1
+ 2
+
+edgeNum: 2 bondType: 1 exist: true weight: 1.0 2
+ 3
+
+end

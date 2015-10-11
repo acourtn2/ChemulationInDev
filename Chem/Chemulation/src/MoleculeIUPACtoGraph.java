@@ -67,6 +67,38 @@ public class MoleculeIUPACtoGraph{
 				base = temp;
 				sections.set(5, (new ArrayList<>(Arrays.asList("cyclo"))));
 			}
+			if(base.contains("bromo") || base.contains("chloro") || base.contains("floro")){
+				String temp = base;
+				int beforeHal = 0;
+				int afterHal = 0;
+				int locOfHal = 0;
+				int previousSpace = 0;
+				
+				afterHal = base.indexOf("bromo") + 5;
+				if(base.contains("-")){
+					for(int k = 0; k < base.length(); k++){
+						if(base.charAt(k) == '-'){
+							beforeHal = k;
+						}
+					
+					}
+				}
+				for(int k = beforeHal; k > 0; k--){
+					if(base.charAt(k) == ' '){
+						previousSpace = k;
+						break;
+					}
+				}
+				locOfHal = Integer.parseInt(base.substring(previousSpace, beforeHal));
+				int powerOH = 0;
+				for(int k = locOfHal; k >= 10; k/= 10){
+					powerOH ++;
+				}
+			
+			
+			}
+			
+			
 			if(base.contains("ol")){
 				String temp = base;
 				int beforeOH = 0;
@@ -247,14 +279,17 @@ public class MoleculeIUPACtoGraph{
 				}
 			
 			}
-			
+			if(i == 3){ //build the halides
+				
+				
+			}
 			if(i == 4){ // this deals with small  of alcohol
 				for(int j = 0; j < working.size(); j++){
 					System.out.println("dBond on atom : " + Integer.parseInt(working.get(j)));
 					aList.add(new Atom(aList.size(), 8, 15.99, 2.0, "Oxygen"));
 					aList.add(new Atom(aList.size(), 1, 1.0079, 2.0, "Hydrogen"));
 					Bond oxyHydBond = new Bond(bList.size(), 1, true, 1);
-					Bond oxyCarBond = new Bond(bList.size(), 1, true, 1);
+					Bond oxyCarBond = new Bond(bList.size()+1, 1, true, 1);
 					oxyHydBond.addAdjacentAtoms(aList.get(aList.size() -2));
 					oxyHydBond.addAdjacentAtoms(aList.get(aList.size() -1));
 					oxyCarBond.addAdjacentAtoms(aList.get(aList.size() -2));
