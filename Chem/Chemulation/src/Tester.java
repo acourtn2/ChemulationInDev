@@ -5,7 +5,7 @@ public class Tester {
 		Molecule test = graphOne.convertToMolecule();
 	//	System.out.println(test);
 	//	System.out.println("name"+ graphOne.getMasterString());
-		test.fixBondsOfAtom();
+		//test.fixBondsOfAtom();
 		//WriteMolecule cOut = new WriteMolecule(graphOne.getMasterString(), test.getAtomList(), test.getBondList());
 		WriteToJSON cOut = new WriteToJSON(graphOne.getMasterString(), test.getAtomList(), test.getBondList());
 	//	System.out.println("bugpoint4" + test.getAtomList().size());

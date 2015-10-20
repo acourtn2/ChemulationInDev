@@ -299,6 +299,13 @@ public class MoleculeIUPACtoGraph{
 					
 				}
 			}
+			if(i == 5){
+				Bond endOfCycle = new Bond(bList.size(),1, true, 1);
+				endOfCycle.addAdjacentAtoms(aList.get(0));
+				int numAtoms = getPrefixNum(masterString.substring(0, (masterString.indexOf("ane"))));
+				endOfCycle.addAdjacentAtoms(aList.get(numAtoms-1));
+				bList.add(endOfCycle);
+			}
 		}
 	}
 	

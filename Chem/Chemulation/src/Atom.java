@@ -66,6 +66,9 @@ public class Atom {
 	public void setAdjacentBonds(ArrayList<Bond> adjacentBonds) {
 		this.adjacentBonds = adjacentBonds;
 	}
+	public void addAdjacentBonds(Bond  inBond){
+		adjacentBonds.add(inBond);
+	}
 	public String toString(){
 		String temp = ("vertexNum: "  + vertexNum + " atomicNum: " + atomicNum + " atomicWeight: " + atomicWeight + " electroNeg: " + electroNeg + " atomName: " + atomName + " adjacentBonds ");
 		if(adjacentBonds == null){

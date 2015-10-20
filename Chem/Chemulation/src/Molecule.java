@@ -50,15 +50,14 @@ public class Molecule {
 		
 			for(int j = 0; j < bondList.size(); j++){//iterates bondList
 				temp2 = bondList.get(j).getAdjacentAtoms();
-				for(int k = 0; k < temp2.size(); k++){ //iterates atoms on BondList
+				for(int k = 0; k < bondList.size(); k++){ //iterates atoms on BondList
 				
 					if(temp2.get(k).getVertexNum() == atomList.get(k).getVertexNum()){
 					//	System.out.println("bugpoint2");
-						temp.add(k, bondList.get(j));
+					//	atomList.get(i).addAdjacentBonds(bondList.get(j));
 					}
 				}
-				temp.trimToSize();
-				atomList.get(i).setAdjacentBonds(temp);
+				
 			}
 		}
 	}
