@@ -3,6 +3,8 @@ public class Molecule {
 	private ArrayList<Atom> atomList;
 	private ArrayList<Bond> bondList;
 	
+	public static Molecule WATER = new Molecule();
+	
 	public Molecule(){
 		atomList = new ArrayList<Atom>(5);
 		bondList = new ArrayList<Bond>(5);
@@ -39,6 +41,42 @@ public class Molecule {
 	public void setbondList(ArrayList<Bond> bondList){
 		this.bondList = bondList;
 	}
+	public void fixBondsOfAtom(){ // do fix bonds of Atom first
+		//System.out.println("bugpoint1");
+		ArrayList<Bond> temp = new ArrayList<Bond>(atomList.size());
+		ArrayList<Atom> temp2 = new ArrayList<Atom>(bondList.size());
+		//System.out.println("bugpoint 3, temp.size" + temp.size());
+		for(int i = 0; i < atomList.size(); i++){ // iterates atomList
+		
+			for(int j = 0; j < bondList.size(); j++){//iterates bondList
+				temp2 = bondList.get(j).getAdjacentAtoms();
+				for(int k = 0; k < temp2.size(); k++){ //iterates atoms on BondList
+				
+					if(temp2.get(k).getVertexNum() == atomList.get(k).getVertexNum()){
+					//	System.out.println("bugpoint2");
+						temp.add(k, bondList.get(j));
+					}
+				}
+				temp.trimToSize();
+				atomList.get(i).setAdjacentBonds(temp);
+			}
+		}
+	}
+/*	public void fixAtomsOfBond(){ // do fix bonds of Atom first
+		ArrayList<Atom> temp = new ArrayList<Atom>(atomList.size());
+		ArrayList<Bond> temp2 = new ArrayList<Bond>(bondList.size());
+		for(int i = 0; i < temp2.size(); i++){ // iterates bondList
+			for(int j = 0; j < atomList.size(); j++){//iterates atomlist
+				temp2 = atomList.get(j).getAdjacentBonds();
+				for(int k = 0; k < temp2.size(); k++){ //iterates bonds on atomList
+					if(temp2.get(k).getEdgeNum() == bondList.get(k).getEdgeNum()){
+						temp.set(k, bondList.get(j));
+					}
+				}
+				bondList.get(i).setAdjacentAtoms(temp);
+			}
+		}
+	} */
 	public String toString(){
 		String temp = " ";
 		if(atomList == null){

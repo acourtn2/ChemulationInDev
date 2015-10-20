@@ -1,0 +1,217 @@
+1-bromo-1-methyl-cyclohexane
+Atoms
+vertexNum: 0 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 1 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 2 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 3 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 4 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 5 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 6 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 7 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Bromide adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 1
+ 2
+
+edgeNum: 2 bondType: 1 exist: true weight: 1.0 2
+ 3
+
+edgeNum: 3 bondType: 1 exist: true weight: 1.0 3
+ 4
+
+edgeNum: 4 bondType: 1 exist: true weight: 1.0 4
+ 5
+
+edgeNum: 5 bondType: 1 exist: true weight: 1.0 5
+ 0
+
+edgeNum: 6 bondType: 1 exist: true weight: 1.0 0
+ 6
+edgeNum: 7 bondType: 1 exist: true weight: 1.0 0 7
+
+end
+
+Atoms
+vertexNum: 0 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 1 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 2 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 3 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 4 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 5 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 6 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 7 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Bromide adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 1
+ 2
+
+edgeNum: 2 bondType: 1 exist: true weight: 1.0 2
+ 3
+
+edgeNum: 3 bondType: 1 exist: true weight: 1.0 3
+ 4
+
+edgeNum: 4 bondType: 1 exist: true weight: 1.0 4
+ 5
+
+edgeNum: 5 bondType: 1 exist: true weight: 1.0 5
+ 0
+
+edgeNum: 6 bondType: 1 exist: true weight: 1.0 0
+ 6
+end
+
+Atoms
+vertexNum: 0 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 1 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 2 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 3 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 4 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 5 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 6 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 7 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Oxygen adjacentBonds 
+vertexNum: 8 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+vertexNum: 9 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 1
+ 2
+
+edgeNum: 2 bondType: 1 exist: true weight: 1.0 2
+ 3
+
+edgeNum: 3 bondType: 1 exist: true weight: 1.0 3
+ 4
+
+edgeNum: 4 bondType: 1 exist: true weight: 1.0 4
+ 5
+
+edgeNum: 5 bondType: 1 exist: true weight: 1.0 5
+ 0
+
+edgeNum: 6 bondType: 1 exist: true weight: 1.0 0
+ 6
+edgeNum: 7 bondType: 1 exist: true weight: 1.0 7 8
+
+edgeNum: 8 bondType: 1 exist: true weight: 1.0 7 9
+
+end
+
+Atoms
+vertexNum: 0 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 1 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 2 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 3 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 4 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 5 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 6 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 7 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Oxygen adjacentBonds 
+vertexNum: 8 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+vertexNum: 9 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 1
+ 2
+
+edgeNum: 2 bondType: 1 exist: true weight: 1.0 2
+ 3
+
+edgeNum: 3 bondType: 1 exist: true weight: 1.0 3
+ 4
+
+edgeNum: 4 bondType: 1 exist: true weight: 1.0 4
+ 5
+
+edgeNum: 5 bondType: 1 exist: true weight: 1.0 5
+ 0
+
+edgeNum: 6 bondType: 1 exist: true weight: 1.0 0
+ 6
+edgeNum: 7 bondType: 1 exist: true weight: 1.0 7 8
+
+edgeNum: 8 bondType: 1 exist: true weight: 1.0 7 9
+
+edgeNum: 9 bondType: 1 exist: true weight: 1.0 7 0
+end
+
+Atoms
+vertexNum: 0 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 1 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 2 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 3 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 4 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 5 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 6 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 7 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Oxygen adjacentBonds 
+vertexNum: 8 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+vertexNum: 9 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 1
+ 2
+
+edgeNum: 2 bondType: 1 exist: true weight: 1.0 2
+ 3
+
+edgeNum: 3 bondType: 1 exist: true weight: 1.0 3
+ 4
+
+edgeNum: 4 bondType: 1 exist: true weight: 1.0 4
+ 5
+
+edgeNum: 5 bondType: 1 exist: true weight: 1.0 5
+ 0
+
+edgeNum: 6 bondType: 1 exist: true weight: 1.0 0
+ 6
+edgeNum: 7 bondType: 1 exist: true weight: 1.0 7 8
+
+edgeNum: 8 bondType: 1 exist: true weight: 1.0 7 0
+
+end
+1-methyl-1-cyclohexanol
+Atoms
+vertexNum: 0 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 1 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 2 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 3 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 4 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 5 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 6 atomicNum: 6 atomicWeight: 12.011 electroNeg: 2.0 atomName: Carbon adjacentBonds 
+vertexNum: 7 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Oxygen adjacentBonds 
+vertexNum: 8 atomicNum: 1 atomicWeight: 50 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 1
+ 2
+
+edgeNum: 2 bondType: 1 exist: true weight: 1.0 2
+ 3
+
+edgeNum: 3 bondType: 1 exist: true weight: 1.0 3
+ 4
+
+edgeNum: 4 bondType: 1 exist: true weight: 1.0 4
+ 5
+
+edgeNum: 5 bondType: 1 exist: true weight: 1.0 5
+ 0
+
+edgeNum: 6 bondType: 1 exist: true weight: 1.0 0
+ 6
+edgeNum: 7 bondType: 1 exist: true weight: 1.0 7 8
+
+edgeNum: 8 bondType: 1 exist: true weight: 1.0 7 0
+end

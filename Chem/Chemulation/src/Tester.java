@@ -1,11 +1,23 @@
 import java.util.*;
 public class Tester {
-	public static void main(String[] args){
-		//MoleculeIUPACtoGraph test = new MoleculeIUPACtoGraph();
-		Molecule test = new MoleculeIUPACtoGraph().convertToMolecule();
-		System.out.println(test);
-		WriteMolecule cOut = new WriteMolecule("2-butene", test.getAtomList(), test.getBondList());
+	public static void main(String[] args){ // use JSON!
+		MoleculeIUPACtoGraph graphOne = new MoleculeIUPACtoGraph();
+		Molecule test = graphOne.convertToMolecule();
+	//	System.out.println(test);
+	//	System.out.println("name"+ graphOne.getMasterString());
+		test.fixBondsOfAtom();
+		//WriteMolecule cOut = new WriteMolecule(graphOne.getMasterString(), test.getAtomList(), test.getBondList());
+		WriteToJSON cOut = new WriteToJSON(graphOne.getMasterString(), test.getAtomList(), test.getBondList());
+	//	System.out.println("bugpoint4" + test.getAtomList().size());
 		cOut.writing();
 		cOut.endWriter();
+		//ReadMolecule cIn = new ReadMolecule("2-butene");
+		//System.out.println("test2");
+		//cIn.reading();
+		//System.out.println("test3");
+		//cIn.endReading();
+		//Molecule readingTest = cIn.getMolecule();
+		
+		//System.out.println(readingTest);
 	}
 }

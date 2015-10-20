@@ -303,7 +303,9 @@ public class MoleculeIUPACtoGraph{
 	}
 	
 	
-	
+	public String getMasterString(){
+		return masterString;
+	}
 	
 	
 	

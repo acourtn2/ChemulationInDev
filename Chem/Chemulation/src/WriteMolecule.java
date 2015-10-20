@@ -39,7 +39,6 @@ public class WriteMolecule {
 	public void writeMeat(){
 		
 		try {
-			System.out.println("test1");
 			w.write(outString); //name of molecule
 			w.newLine();
 			w.write("Atoms");

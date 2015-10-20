@@ -20,7 +20,7 @@ public class Bond {
 		adjacentAtoms = new ArrayList<Atom>(0);
 	}
 	
-	public Bond(int edgeType, int bondType, boolean exist, double weight, ArrayList<Atom> adjacentAtoms){
+	public Bond(int edgeNum, int bondType, boolean exist, double weight, ArrayList<Atom> adjacentAtoms){
 		this.bondType = bondType;
 		this.edgeNum = edgeNum;
 		this.exist = exist;

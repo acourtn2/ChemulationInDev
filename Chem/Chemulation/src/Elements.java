@@ -1,5 +1,7 @@
 
 public enum Elements {
+	
+	/*
 	HYDROGEN     (1  ,"H ",1.0079   )   ,
 	HELIUM	     (2  ,"He ",4.0026  )  ,
 	LITHIUM	     (3  ,"Li ",6.941   )  ,
@@ -113,8 +115,8 @@ public enum Elements {
 	ROENTGENIUM	 (111,"Rg ",     )  ,
 	COPERNICIUM	 (112,"Cn ",     ) ;
 	
-	private final int AtomicNum;
-	private final String symbol
+	private final int atomicNum;
+	private final String symbol;
 	private final double atomicWeight;
 	
 	public Element(int atomicNum, String symbol, double atomicWeight){
@@ -122,5 +124,6 @@ public enum Elements {
 		this.symbol = symbol;
 		this.atomicWeight = atomicWeight;
 	}
+	*/
 	
 }

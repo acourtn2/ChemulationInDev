@@ -32,14 +32,18 @@ public class ReadMolecule {
 		}
 	}
 	public void readIn(){
+		System.out.println("test1");
 		String temp = "";
 		boolean title = false;
 		boolean atom = false;
 		boolean bond = false;
 		try {
+			System.out.println("test4");
 			temp = r.readLine();
 			title = true;
 			while(temp != null){
+				System.out.println(temp);
+				
 				if(temp.equals("end")){
 					return;
 				}
@@ -56,16 +60,19 @@ public class ReadMolecule {
 				if(temp.equals("atom")){
 					atom = true;
 				}  
-				r.readLine();
+				temp = r.readLine();
 			}
 		} catch (IOException e) {
 			System.out.println("error reading in from file");
 		}
-		
-				
-		
 	}
-	public void closeBufferedReader(){
+		
+	public Molecule getMolecule(){
+		return new Molecule(aList, bList);
+	}
+		
+	
+	public void endReading(){
 		try {
 			r.close();
 		} catch (IOException e) {
