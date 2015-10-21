@@ -67,6 +67,13 @@ public class Atom {
 		this.adjacentBonds = adjacentBonds;
 	}
 	public void addAdjacentBonds(Bond  inBond){
+		if(adjacentBonds == null){
+			ArrayList<Bond> temp = new ArrayList<Bond>(5);
+			temp.add(inBond);
+			adjacentBonds = temp;
+		}
+	//	System.out.println(inBond);
+		//System.out.println(adjacentBonds);
 		adjacentBonds.add(inBond);
 	}
 	public String toString(){
@@ -74,6 +81,7 @@ public class Atom {
 		if(adjacentBonds == null){
 			return temp;
 		}
+		//System.out.println(adjacentBonds);
 		for(Bond b: adjacentBonds){
 			temp.concat(b.toString());
 		}

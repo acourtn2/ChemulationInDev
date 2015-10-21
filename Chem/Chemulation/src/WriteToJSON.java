@@ -57,10 +57,7 @@ public class WriteToJSON {
 				w.newLine();
 				w.write("\t" + "\"" + "adjacentBonds" + "\": {");
 				w.newLine();
-				if(tempA.getAdjacentBonds() == null){
-					
-				} else {
-					
+				
 				
 				for(int z = 0; z < tempA.getAdjacentBonds().size(); z++){
 					w.write("\t\t" +"[");
@@ -108,7 +105,7 @@ public class WriteToJSON {
 				w.write("\t" + "}");
 				w.newLine();
 			
-			}
+			
 			
 		} catch (IOException e) {
 			System.out.println("error writing meat of file");

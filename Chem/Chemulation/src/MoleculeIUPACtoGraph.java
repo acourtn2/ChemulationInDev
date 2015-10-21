@@ -285,7 +285,8 @@ public class MoleculeIUPACtoGraph{
 			}
 			if(i == 4){ // this deals with small  of alcohol
 				for(int j = 0; j < working.size(); j++){
-					System.out.println("dBond on atom : " + Integer.parseInt(working.get(j)));
+				//	System.out.println(working.get(j));
+				//	System.out.println("dBond on atom : " + Integer.parseInt(working.get(j)));
 					aList.add(new Atom(aList.size(), 8, 15.99, 2.0, "Oxygen"));
 					aList.add(new Atom(aList.size(), 1, 1.0079, 2.0, "Hydrogen"));
 					Bond oxyHydBond = new Bond(bList.size(), 1, true, 1);
@@ -293,18 +294,24 @@ public class MoleculeIUPACtoGraph{
 					oxyHydBond.addAdjacentAtoms(aList.get(aList.size() -2));
 					oxyHydBond.addAdjacentAtoms(aList.get(aList.size() -1));
 					oxyCarBond.addAdjacentAtoms(aList.get(aList.size() -2));
-					oxyCarBond.addAdjacentAtoms(aList.get(Integer.parseInt(working.get(j))-1));
+					int tempInt = Integer.parseInt(working.get(j))-1;
+					if(tempInt < 0){
+						tempInt = 0;
+					}
+					oxyCarBond.addAdjacentAtoms(aList.get(tempInt));
 					bList.add(oxyHydBond);
 					bList.add(oxyCarBond);
 					
 				}
 			}
 			if(i == 5){
+				for(int j = 0; j < working.size(); j++){
 				Bond endOfCycle = new Bond(bList.size(),1, true, 1);
 				endOfCycle.addAdjacentAtoms(aList.get(0));
 				int numAtoms = getPrefixNum(masterString.substring(0, (masterString.indexOf("ane"))));
 				endOfCycle.addAdjacentAtoms(aList.get(numAtoms-1));
 				bList.add(endOfCycle);
+				}
 			}
 		}
 	}

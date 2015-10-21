@@ -42,19 +42,12 @@ public class Molecule {
 		this.bondList = bondList;
 	}
 	public void fixBondsOfAtom(){ // do fix bonds of Atom first
-		//System.out.println("bugpoint1");
-		ArrayList<Bond> temp = new ArrayList<Bond>(atomList.size());
-		ArrayList<Atom> temp2 = new ArrayList<Atom>(bondList.size());
-		//System.out.println("bugpoint 3, temp.size" + temp.size());
-		for(int i = 0; i < atomList.size(); i++){ // iterates atomList
-		
-			for(int j = 0; j < bondList.size(); j++){//iterates bondList
-				temp2 = bondList.get(j).getAdjacentAtoms();
-				for(int k = 0; k < bondList.size(); k++){ //iterates atoms on BondList
-				
-					if(temp2.get(k).getVertexNum() == atomList.get(k).getVertexNum()){
-					//	System.out.println("bugpoint2");
-					//	atomList.get(i).addAdjacentBonds(bondList.get(j));
+		for(int i = 0; i < bondList.size(); i++){
+			ArrayList<Atom> bListConnectedAtoms = bondList.get(i).getAdjacentAtoms();
+			for(int j = 0; j < bListConnectedAtoms.size(); j++){
+				for(int k = 0; k < atomList.size(); k++){
+					if(bListConnectedAtoms.get(j).getVertexNum() == atomList.get(k).getVertexNum() && (atomList.get(k) != null)){
+						atomList.get(k).addAdjacentBonds(bondList.get(i));
 					}
 				}
 				

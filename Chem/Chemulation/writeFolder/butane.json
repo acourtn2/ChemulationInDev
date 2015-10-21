@@ -1,0 +1,149 @@
+{
+	"vertexNum":0",
+	"atomicNum":6",
+	"atomicWeight":12.011",
+	"electroNeg":2.0",
+	"atomName":Carbon",
+	"adjacentBonds": {
+		[
+			"edgeNum":0",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":0",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":3",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+	}
+{
+	"vertexNum":1",
+	"atomicNum":6",
+	"atomicWeight":12.011",
+	"electroNeg":2.0",
+	"atomName":Carbon",
+	"adjacentBonds": {
+		[
+			"edgeNum":0",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":0",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":1",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+	}
+{
+	"vertexNum":2",
+	"atomicNum":6",
+	"atomicWeight":12.011",
+	"electroNeg":2.0",
+	"atomName":Carbon",
+	"adjacentBonds": {
+		[
+			"edgeNum":1",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":1",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":2",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+	}
+{
+	"vertexNum":3",
+	"atomicNum":6",
+	"atomicWeight":12.011",
+	"electroNeg":2.0",
+	"atomName":Carbon",
+	"adjacentBonds": {
+		[
+			"edgeNum":2",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":2",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+		[
+			"edgeNum":3",
+			"bondType":1",
+			"exist":true",
+			"weight":1.0
+		]
+	}
+{
+	"edgeNum":0",
+	"bondType":1",
+	"exist":true",
+	"weight1.0":
+	"adjacentAtoms": {
+		"vertexNum":",
+		"atomicNum":",
+		"atomicWeight":",
+		"electroNeg":",
+		"atomName":",
+{
+	"edgeNum":1",
+	"bondType":1",
+	"exist":true",
+	"weight1.0":
+	"adjacentAtoms": {
+		"vertexNum":",
+		"atomicNum":",
+		"atomicWeight":",
+		"electroNeg":",
+		"atomName":",
+{
+	"edgeNum":2",
+	"bondType":1",
+	"exist":true",
+	"weight1.0":
+	"adjacentAtoms": {
+		"vertexNum":",
+		"atomicNum":",
+		"atomicWeight":",
+		"electroNeg":",
+		"atomName":",
+{
+	"edgeNum":3",
+	"bondType":1",
+	"exist":true",
+	"weight1.0":
+	"adjacentAtoms": {
+		"vertexNum":",
+		"atomicNum":",
+		"atomicWeight":",
+		"electroNeg":",
+		"atomName":",
+	}

@@ -28,6 +28,14 @@ public class Bond {
 		this.adjacentAtoms = adjacentAtoms;
 	}
 	
+	public Bond(Bond inBond){
+		this.bondType = inBond.bondType;
+		this.edgeNum = inBond.edgeNum;
+		this.exist = inBond.exist;
+		this.weight = inBond.weight;
+		this.adjacentAtoms = inBond.adjacentAtoms;
+	}
+	
 	public int getBondType(){
 		return bondType;
 	}

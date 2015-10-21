@@ -1,0 +1,12 @@
+ehtanol
+Atoms
+vertexNum: 0 atomicNum: 8 atomicWeight: 15.99 electroNeg: 2.0 atomName: Oxygen adjacentBonds 
+vertexNum: 1 atomicNum: 1 atomicWeight: 1.0079 electroNeg: 2.0 atomName: Hydrogen adjacentBonds 
+Bonds
+edgeNum: 0 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+edgeNum: 1 bondType: 1 exist: true weight: 1.0 0
+ 1
+
+end
