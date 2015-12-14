@@ -1,0 +1,150 @@
+//2-hexanol
+var scene, camera;
+var atom1, atom2, atom3, atom4, atom5, atom6, atom7, atom8, atom9, atom10, bond1, bond2, bond3, bond4, bond5, bond6, bond7, bond8, bond9;
+var yc2 = 3 / Math.cos(35.25);
+var yc = 3 * Math.tan(35.25);
+var count = 0;
+
+init();
+animate();
+
+function init() {
+    scene = new THREE.Scene();
+    var canvas = $('#canvas3d');
+
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas.get(0),
+        antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x121224, 1);
+
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.name = 'camera';
+    scene.add(camera);
+
+    atom1 = placeAtom(1, "C1", -7, 0, 0, scene, 0xff0000);
+    atom2 = placeAtom(1, "C2", -4, yc, 0, scene, 0xff0000);
+    atom3 = placeAtom(1, "C3", -1, 0, 0, scene, 0xff0000);
+    atom4 = placeAtom(1, "C4", 2, yc, 0, scene, 0xff0000);
+    atom5 = placeAtom(1, "C5", 5, 0, 0, scene, 0xff0000);
+    atom6 = placeAtom(1, "C6", 5, yc2, 0, scene, 0xff0000);
+    atom7 = placeAtom(1.2, "Cl1", 8, yc, 0, scene, 0x0000ff);
+    atom8 = placeAtom(0.9, "O", 16, 2 * yc, 0, scene, 0x00ff00);
+    atom9 = placeAtom(.5, "H", 16, 2 * yc + 2, 0, scene, 0x000000);
+    bond1 = bondAtom(atom1, atom2, .2, scene);
+    bond2 = bondAtom(atom2, atom3, .2, scene);
+    bond6 = bondAtom(atom5, atom7, .2, scene);
+    bond3 = bondAtom(atom3, atom4, .2, scene);
+    bond4 = bondAtom(atom4, atom5, .2, scene);
+    bond5 = bondAtom(atom5, atom6, .2, scene);
+    bond7 = bondAtom(atom5, atom8, .2, scene);
+    bond8 = bondAtom(atom8, atom9, .2, scene);
+    scene.remove(bond7);
+    var pos = new THREE.Vector3(0, 0, 0);
+    camera.position.set(pos.x, pos.y, pos.z + 20);
+    camera.lookAt(pos);
+
+    controls = new THREE.TrackballControls(camera, renderer.domElement);
+    controls.target.set(pos.x, pos.y, pos.z);
+
+    var light = new THREE.AmbientLight(0x404040);
+    scene.add(light);
+
+    var pointLight = new THREE.PointLight(0xffffff, 0.8, 0);
+    camera.add(pointLight);
+    camera = scene.getObjectByName('camera');
+    renderer.render(scene, camera);
+}
+
+function placeAtom(radius, symbol, xStart, yStart, zStart, scene, color) {
+    var sphere = new THREE.SphereGeometry(radius, 20, 20);
+    var mat = new THREE.MeshPhongMaterial({
+        color: color,
+        side: THREE.DoubleSide
+    });
+    var atom = new THREE.Mesh(sphere, mat);
+    atom.translateX(xStart);
+    atom.translateY(yStart);
+    atom.translateZ(zStart);
+    scene.add(atom);
+    return atom;
+}
+
+function bondAtom(atomA, atomB, thickness, scene) {
+    var x = (atomA.position.x - atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    var height = Math.sqrt((x * x) + (y * y) + (z * z));
+    var geometry = new THREE.CylinderGeometry(thickness, thickness, height);
+    var mat = new THREE.MeshPhongMaterial({
+        color: 0xffff00,
+        side: THREE.DoubleSide
+    });
+    var cylinder = new THREE.Mesh(geometry, mat);
+    cylinder.position.x = (atomA.position.x + atomB.position.x) / 2;
+    cylinder.position.y = (atomA.position.y + atomB.position.y) / 2;
+    cylinder.position.z = (atomA.position.z + atomB.position.z) / 2;
+    //cylinder.rotation.z = Math.atan(-vx / vy);
+    //cylinder.rotation.y = ry;
+    //cylinder.rotation.x = rx;
+
+    cylinder.rotation.z = Math.atan(-x / y);
+    //cylinder.rotation.y = Math.atan(-z/x);
+    if (y != 0) cylinder.rotation.x = Math.atan(z / y);
+    else cylinder.rotation.y = Math.atan(-z / x);
+    scene.add(cylinder);
+    return cylinder;
+}
+
+function moveAtom(atom, EpositionX, EpositionY, EpositionZ, resistance) {
+
+    if (atom.position.x != EpositionX) {
+        atom.position.x += (EpositionX - atom.position.x) / (resistance);
+    }
+    if (atom.position.y != EpositionY) {
+        atom.position.y += (EpositionY - atom.position.y) / (resistance);
+    }
+    if (atom.position.z != EpositionZ) {
+        atom.position.z += (EpositionZ - atom.position.z) / (resistance);
+    }
+}
+
+function moveMolecule(species, EpositionX, EpositionY, resistance) {
+    if (species[0].position.x != EpositionX) {
+        for (var i = 0; i < species.length; i++) {
+            species[i].position.x += (EpositionX - species[0].position.x) / (resistance);
+        }
+    }
+    if (species[0].position.y != EpositionY) {
+        for (var i = 0; i < species.length; i++) {
+            species[i].position.y += (EpositionY - species[0].position.y) / (resistance);
+        }
+    }
+}
+
+function updateBond(atomA, atomB, bond) {
+    scene.remove(bond);
+    var newBond = bondAtom(atomA, atomB, .2, scene);
+    return newBond;
+}
+
+
+function animate() {
+    requestAnimationFrame(animate);
+    if (count / 300 > 1 && count / 300 < 2) {
+        moveAtom(atom7, 16, 2 * yc, 0, 60);
+        scene.remove(bond6);
+    } else if (count / 300 > 2 && count / 300 < 3) {
+        moveAtom(atom8, 8, yc, 0, 60);
+        moveAtom(atom9, 8, yc + 2, 0, 60);
+        bond8 = updateBond(atom8, atom9, bond8);
+    } else if (count / 300 > 3) {
+        scene.add(bond6);
+        scene.remove(bond8);
+        moveAtom(atom9, 16, 2 * yc + 2, 0, 60);
+    }
+    count++;
+    controls.update();
+    renderer.render(scene, camera);
+}
