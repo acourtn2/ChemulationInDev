@@ -1,0 +1,499 @@
+//ethanol
+var scene, camera;
+var count = 0;
+var array = [];
+var place = [];
+var bonds = [];
+var bh;
+init();
+animate();
+ 
+function init() {
+    scene = new THREE.Scene();
+    var canvas = $('#canvas3d');
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas.get(0),
+        antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x121224, 1);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.name = 'camera';
+    scene.add(camera);
+   
+tetrahedronStart(0, 0, 0, 4, .2, 1, scene, 0xff0000);
+tetrahedron(place[0], array[0], place[2], place[3], place[1], .2, .8, scene, 0x0000ff);
+tetrahedron(place[3], array[0], place[2], place[0], place[1], .2, 1, scene, 0xff0000);
+tetrahedron(place[5], array[1], place[4], place[6], place[7], .2, .4, scene, 0xffffff);
+tetrahedron(place[6], array[1], place[4], place[5], place[7], .2, .4, scene, 0xffffff);
+  array[4].position.x = place[2].position.x;
+  array[4].position.y = place[2].position.y-.02;
+  array[4].position.z = place[2].position.z+.02;
+  scene.remove(bonds[findBond(array[4], array[1])]);
+  bondAtom(array[4], array[0], .2, scene);
+tetrahedron(place[1], array[0], place[2], place[3], place[0], .2, .4, scene, 0xffffff);
+tetrahedron(place[10], array[2], place[9], place[8], place[11], .2, .4, scene, 0xffffff);
+tetrahedron(place[2], array[0], place[0], place[1], place[3], .2, .4, scene, 0xffffff);
+  array[7].position.x = place[9].position.x;
+  array[7].position.y = place[9].position.y;
+  array[7].position.z = place[9].position.z;
+  scene.remove(bonds[findBond(array[7], array[0])]);
+  bondAtom(array[7], array[2], .2, scene);  
+tetrahedron(place[11], array[2], place[8], place[10], place[9], .2, .4, scene, 0xffffff);
+ 
+    var pos = new THREE.Vector3(0, 0, 0);
+    camera.position.set(0, 0, 20);
+    camera.lookAt(pos);
+    controls = new THREE.TrackballControls(camera, renderer.domElement);
+    controls.target.set(pos.x, pos.y, pos.z);
+    var light = new THREE.AmbientLight(0x404040);
+    scene.add(light);
+    var pointLight = new THREE.PointLight(0xffffff, 0.8, 0);
+    camera.add(pointLight);
+    camera = scene.getObjectByName('camera');
+    renderer.render(scene, camera);
+}
+ 
+function tetrahedron(nC, oC, a1, a2, a3, bond, radius, scene, color)
+{
+    var x1= nC.position.x - a1.position.x;
+    var y1 = nC.position.y - a1.position.y;
+    var z1 = nC.position.z - a1.position.z;
+    var x= nC.position.x - oC.position.x;
+    var y = nC.position.y - oC.position.y;
+    var z = nC.position.z - oC.position.z;
+    var side = Math.sqrt(x1*x1+y1*y1+z1*z1);
+    var bondLen = Math.sqrt(x*x+y*y+z*z);
+    var height = side * Math.sqrt(2/3);
+    var offset = (height*2 - bondLen)/bondLen;
+   
+    var atomA, atomB, atomC, atomD, atomE;
+    if (same(nC, .02) == -1) {
+    atomA = placeAtom(radius,"", nC.position.x, nC.position.y, nC.position.z, scene, color);
+    array = array.concat(atomA);}
+    else { atomB = array[same(nC, .02)];}
+    if (same(oC, .02) == -1) {
+    atomB = placeAtom(radius,"", oC.position.x, oC.position.y, oC.position.z, scene, 0xff0000);
+    array = array.concat(atomB);}
+    else { atomB = array[same(oC, .02)];}
+    atomC = placeAtom(.01,"", a1.position.x + x*offset, a1.position.y + y*offset, a1.position.z + z*offset, scene, 0xff0000);
+    atomD = placeAtom(.01,"", a2.position.x + x*offset, a2.position.y + y*offset, a2.position.z + z*offset, scene, 0xff0000);
+    atomE = placeAtom(.01,"", a3.position.x + x*offset, a3.position.y + y*offset, a3.position.z + z*offset, scene, 0xff0000);
+    bondAtom(atomA,atomB,bond,scene);
+    place = place.concat(atomB, atomC, atomD, atomE);
+}
+ 
+function trigonal(nC, oC, a1, a2, bond, radius, scene) {
+  var x= nC.position.x - oC.position.x;
+    var y = nC.position.y - oC.position.y;
+    var z = nC.position.z - oC.position.z;
+  var side = Math.sqrt(x*x+y*y+z*z);
+  var offset = 2;
+  var atomA, atomB;
+    if (same(nC, .02) == -1) {
+    atomA = placeAtom(radius,"", nC.position.x, nC.position.y, nC.position.z, scene, 0xff0000);
+    array = array.concat(atomA);}
+    else { atomB = array[same(nC, .02)];}
+    if (same(oC, .02) == -1) {
+    atomB = placeAtom(radius,"", oC.position.x, oC.position.y, oC.position.z, scene, 0xff0000);
+    array = array.concat(atomB);}
+    else { atomB = array[same(oC, .02)];}
+  var atomC = placeAtom(.01,"", a1.position.x + x*offset, a1.position.y + y*offset, a1.position.z + z*offset, scene, 0xff0000);
+  var atomD = placeAtom(.01,"", a2.position.x + x*offset, a2.position.y + y*offset, a2.position.z + z*offset, scene, 0xff0000);
+  doubleBondAtom(atomA,atomB,bond,scene);
+    place = place.concat(atomB, atomC, atomD, 0);
+}
+ 
+function linear(nC, oC, bond, radius, scene, bondNum) {
+  var x= nC.position.x - oC.position.x;
+    var y = nC.position.y - oC.position.y;
+    var z = nC.position.z - oC.position.z;
+  var side = Math.sqrt(x*x+y*y+z*z);
+  var atomA, atomB;
+  if (same(nC, .02) == -1) {
+    atomA = placeAtom(radius,"", nC.position.x, nC.position.y, nC.position.z, scene, 0xff0000);
+    array = array.concat(atomA);}
+    else { atomB = array[same(nC, .02)];}
+    if (same(oC, .02) == -1) {
+    atomB = placeAtom(radius,"", oC.position.x, oC.position.y, oC.position.z, scene, 0xff0000);
+    array = array.concat(atomB);}
+    else { atomB = array[same(oC, .02)];}
+  var atomC = placeAtom(.01,"", nC.position.x + x,nC.position.y + y, nC.position.z + z, scene, 0xff0000);
+  if(bondNum==2)
+    doubleBondAtom(atomA, atomB, bond, scene);
+  if(bondNum==3)
+    tripleBondAtom(atomA, atomB, bond, scene);
+  else
+    bondAtom(atomA, atomB, bond, scene);
+  place = place.concat(atomC, 0, 0, 0);
+}
+ 
+function tetrahedronStart(x,y,z,size,bond, radius,scene, color)
+{
+    var zc = 1/Math.sqrt(2);
+    var atomE = placeAtom(.01,"",x+size*(-1),y, z+size*(-zc),scene, 0xff0000);
+    var atomB =  placeAtom(.01,"",x+size*(+1),y, z+size*(-zc),scene, 0xff0000);
+    var atomC = placeAtom(.01,"",x,y+size*(-1), z+size*(+zc),scene, 0xff0000);
+    var atomD = placeAtom(.01,"",x,y+size*(+1), z+size*(+zc),scene, 0xff0000);
+    var atomA = placeAtom(radius,"",x, y, z,scene, color);
+    array = array.concat(atomA);
+    place = place.concat(atomB, atomC, atomD, atomE);
+}
+ 
+function trigonalStart(x, y, z, size, bond, radius, scene) {
+  var xc = size*Math.sqrt(3)/2;
+  var yc = size/2;
+  var atomA = placeAtom(radius, "", x, y, z, scene, 0xff0000);
+  var atomB = placeAtom(.01, "", x, y+size, z, scene, 0xff0000);
+  var atomC = placeAtom(.01, "", x-xc, y-yc, z, scene, 0xff0000);
+  var atomD = placeAtom(.01, "", x+xc, y-yc, z, scene, 0xff0000);
+  array = [atomA];
+  place = [atomB, atomC, atomD, 0];
+}
+ 
+function placeAtom(radius, symbol, xStart, yStart, zStart, scene, color) {
+    var sphere = new THREE.SphereGeometry(radius, 20, 20);
+    var mat = new THREE.MeshPhongMaterial({
+        color: color,
+        side: THREE.DoubleSide
+    });
+    var atom = new THREE.Mesh(sphere, mat);
+    atom.translateX(xStart);
+    atom.translateY(yStart);
+    atom.translateZ(zStart);
+    scene.add(atom);
+    return atom;
+}
+ 
+function bondAtom(atomA, atomB, thickness, scene) {
+    var x = (atomA.position.x - atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    var height = Math.sqrt((x * x) + (y * y) + (z * z));
+    var geometry = new THREE.CylinderGeometry(thickness, thickness, height);
+    geometry.applyMatrix(new THREE.Matrix4().makeRotationX( THREE.Math.degToRad(90)));
+    var mat = new THREE.MeshPhongMaterial({
+        color: 0xffff00,
+        side: THREE.DoubleSide
+    });
+    var cylinder = new THREE.Mesh(geometry, mat);
+    cylinder.position.x = (atomA.position.x + atomB.position.x) / 2;
+    cylinder.position.y = (atomA.position.y + atomB.position.y) / 2;
+    cylinder.position.z = (atomA.position.z + atomB.position.z) / 2;
+    cylinder.lookAt(atomA.position);
+    scene.add(cylinder);
+    bonds = bonds.concat(atomA, atomB, cylinder, 0, 0);
+    return cylinder;
+}
+ 
+function doubleBondAtom(atomA, atomB, thickness, scene) {
+    var x = (atomA.position.x - atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    var height = Math.sqrt((x * x) + (y * y) + (z * z));
+    var geometry = new THREE.CylinderGeometry(thickness, thickness, height);
+    geometry.applyMatrix(new THREE.Matrix4().makeRotationX( THREE.Math.degToRad(90)));
+    var mat = new THREE.MeshPhongMaterial({
+        color: 0xffff00,
+        side: THREE.DoubleSide
+    });
+    var cylinder = new THREE.Mesh(geometry, mat);
+  var cylinder2 = new THREE.Mesh(geometry, mat);
+   cylinder.position.x = (atomA.position.x + atomB.position.x) / 2;
+   cylinder.position.y = (atomA.position.y + atomB.position.y) / 2;
+   cylinder.position.z = (atomA.position.z + atomB.position.z) / 2;
+  cylinder2.position.x = (atomA.position.x + atomB.position.x) / 2;
+  cylinder2.position.y = (atomA.position.y + atomB.position.y) / 2;
+  cylinder2.position.z = (atomA.position.z + atomB.position.z) / 2;
+  cylinder.lookAt(atomA.position);
+  cylinder2.lookAt(atomA.position);
+ cylinder.position.x = thickness+(atomA.position.x+atomB.position.x)/2;
+   cylinder.position.y = thickness+ (atomA.position.y+atomB.position.y)/2;
+   cylinder.position.z = (atomA.position.z+atomB.position.z)/2;
+  cylinder2.position.x = -thickness+(atomA.position.x+atomB.position.x)/2;
+  cylinder2.position.y = -thickness+(atomA.position.y+atomB.position.y)/2;
+  cylinder2.position.z = (atomA.position.z+atomB.position.z)/2;
+    scene.add(cylinder);
+  scene.add(cylinder2);
+    bonds = bonds.concat(atomA, atomB, cylinder, cylinder2, 0);
+    return [cylinder, cylinder2];
+}
+ 
+function tripleBondAtom(atomA, atomB, thickness, scene) {
+    var x = (atomA.position.x - atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    var height = Math.sqrt((x * x) + (y * y) + (z * z));
+    var geometry = new THREE.CylinderGeometry(thickness, thickness, height);
+    geometry.applyMatrix(new THREE.Matrix4().makeRotationX( THREE.Math.degToRad(90)));
+    var mat = new THREE.MeshPhongMaterial({
+        color: 0xffff00,
+        side: THREE.DoubleSide
+    });
+  var cylinder = new THREE.Mesh(geometry, mat);
+  var cylinder2 = new THREE.Mesh(geometry, mat);
+  var cylinder3 = new THREE.Mesh(geometry, mat);
+  cylinder.position.x = (atomA.position.x + atomB.position.x) / 2;
+  cylinder.position.y = (atomA.position.y + atomB.position.y) / 2;
+  cylinder.position.z = (atomA.position.z + atomB.position.z) / 2;
+  cylinder2.position.x = (atomA.position.x + atomB.position.x) / 2;
+  cylinder2.position.y = (atomA.position.y + atomB.position.y) / 2;
+  cylinder2.position.z = (atomA.position.z + atomB.position.z) / 2;
+  cylinder3.position.x = (atomA.position.x + atomB.position.x) / 2;
+  cylinder3.position.y = (atomA.position.y + atomB.position.y) / 2;
+  cylinder3.position.z = (atomA.position.z + atomB.position.z) / 2;
+  cylinder.lookAt(atomA.position);
+  cylinder2.lookAt(atomA.position);
+  cylinder3.lookAt(atomA.position);
+  cylinder.position.x = 2*thickness+(atomA.position.x+atomB.position.x)/2;
+  cylinder.position.y =2*thickness+ (atomA.position.y+atomB.position.y)/2;
+  cylinder.position.z = (atomA.position.z+atomB.position.z)/2;
+  cylinder2.position.x = -2*thickness+(atomA.position.x+atomB.position.x)/2;
+  cylinder2.position.y = -2*thickness+(atomA.position.y+atomB.position.y)/2;
+  cylinder2.position.z = (atomA.position.z+atomB.position.z)/2;
+  scene.add(cylinder);
+  scene.add(cylinder2);
+  scene.add(cylinder3);
+  bonds = bonds.concat(atomA, atomB, cylinder, cylinder2, cylinder3);
+    return [cylinder, cylinder2, cylinder3];
+}
+ 
+function removeBonds(atomA, atomB) {
+  for (var i=0; i<bonds.length-1; i++) {
+    if(i % 5 == 0){
+            if (equals(bonds[i], atomA, 1) && equals(bonds[i+1], atomB, 1)){
+            scene.remove(bonds[i+4]);
+                        scene.remove(bonds[i+3]);
+                        scene.remove(bonds[i+2]);
+          }
+        if (equals(bonds[i+1], atomA, 1) && equals(bonds[i], atomB, 1)) {
+        scene.remove(bonds[i+4]);
+                        scene.remove(bonds[i+3]);
+                        scene.remove(bonds[i+2]);
+          }
+    }
+  }
+}
+ 
+function removeAtom(atom) {
+  for (var i=0; i<array.length; i++) {
+    removeBonds(array[i], atom);
+  }
+  scene.remove(atom);
+}
+ 
+function moveMolecule(species, EpositionX, EpositionY, z, resistance) {
+    if (species[0].position.x != EpositionX) {
+        for (var i = 0; i < species.length; i++) {
+            species[i].position.x += (EpositionX - species[0].position.x) / (resistance);
+        }
+    }
+    if (species[0].position.y != EpositionY) {
+        for (var i = 0; i < species.length; i++) {
+            species[i].position.y += (EpositionY - species[0].position.y) / (resistance);
+        }
+    }
+    if (species[0].position.z != z) {
+        for (var i = 0; i < species.length; i++) {
+            species[i].position.z += (z - species[0].position.z) / (resistance);
+        }
+    }
+}
+ 
+function updateBond(atomA,atomB)
+{
+  var b = findBond(atomA, atomB);
+  var bond = bonds[b];
+    var x = (atomA.position.x-atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    bond.position.x = (atomA.position.x + atomB.position.x)/2;
+    bond.position.y = (atomA.position.y + atomB.position.y)/2;
+    bond.position.z = (atomA.position.z + atomB.position.z)/2;
+    bond.lookAt(atomA.position);
+}
+ 
+function updateDoubleBond(atomA, atomB) {
+  var b = findBond(atomA, atomB);
+  var b1 = bonds[b];
+  var b2 = bonds[b+1];
+  var thickness = .2;
+  var x = (atomA.position.x-atomB.position.x);
+  var y = (atomA.position.y - atomB.position.y);
+  var z = (atomA.position.z - atomB.position.z);
+  b1.position.x = (atomA.position.x + atomB.position.x) / 2;
+  b1.position.y = (atomA.position.y + atomB.position.y) / 2;
+  b1.position.z = (atomA.position.z + atomB.position.z) / 2;
+  b2.position.x = (atomA.position.x + atomB.position.x) / 2;
+  b2.position.y = (atomA.position.y + atomB.position.y) / 2;
+  b2.position.z = (atomA.position.z + atomB.position.z) / 2;
+  b1.lookAt(atomA.position);
+  b2.lookAt(atomA.position);
+  b1.position.x = thickness+(atomA.position.x+atomB.position.x)/2;
+  b1.position.y = thickness+(atomA.position.y+atomB.position.y)/2;
+  b1.position.z = (atomA.position.z+atomB.position.z)/2;
+  b2.position.x = -thickness+(atomA.position.x+atomB.position.x)/2;
+  b2.position.y = -thickness+(atomA.position.y+atomB.position.y)/2;
+  b2.position.z = (atomA.position.z+atomB.position.z)/2;
+}
+ 
+function updateTripleBond(atomA, atomB) {
+  var b = findBond(atomA, atomB);
+  var b1 = bonds[b];
+  var b2 = bonds[b+1];
+  var b3 = bonds[b+2];
+  var thickness = .2;
+  var x = (atomA.position.x-atomB.position.x);
+  var y = (atomA.position.y - atomB.position.y);
+  var z = (atomA.position.z - atomB.position.z);
+  b1.position.x = (atomA.position.x + atomB.position.x) / 2;
+  b1.position.y = (atomA.position.y + atomB.position.y) / 2;
+  b1.position.z = (atomA.position.z + atomB.position.z) / 2;
+  b2.position.x = (atomA.position.x + atomB.position.x) / 2;
+  b2.position.y = (atomA.position.y + atomB.position.y) / 2;
+  b2.position.z = (atomA.position.z + atomB.position.z) / 2;
+  b3.position.x = (atomA.position.x + atomB.position.x) / 2;
+  b3.position.y = (atomA.position.y + atomB.position.y) / 2;
+  b3.position.z = (atomA.position.z + atomB.position.z) / 2;
+  b1.lookAt(atomA.position);
+  b2.lookAt(atomA.position);
+  b3.lookAt(atomA.position);
+  b1.position.x = 2*thickness+(atomA.position.x+atomB.position.x)/2;
+  b1.position.y =2*thickness+ (atomA.position.y+atomB.position.y)/2;
+  b1.position.z = (atomA.position.z+atomB.position.z)/2;
+  b2.position.x = -2*thickness+(atomA.position.x+atomB.position.x)/2;
+  b2.position.y = -2*thickness+(atomA.position.y+atomB.position.y)/2;
+  b2.position.z = (atomA.position.z+atomB.position.z)/2;
+}
+ 
+function findBond(atomA, atomB) {
+  for (var i=0; i<bonds.length-2; i++) {
+    if(i % 5 == 0){
+            if (equals(bonds[i], atomA, 1) && equals(bonds[i+1], atomB, 1)){
+            return i+2;}
+        if (equals(bonds[i+1], atomA, 1) && equals(bonds[i], atomB, 1)) {
+        return i+2;}
+    }
+  }
+  return -1;
+}
+ 
+function same(atom, threshold)
+{
+  var x = atom.position.x;
+  var y = atom.position.y;
+  var z = atom.position.z;
+    var at = -1;
+    var dx, dy, dz;
+    var i=0;
+    for (i; i< array.length; i++) {
+        dx = Math.abs(x - array[i].position.x);
+        dy = Math.abs(y - array[i].position.y);
+        dz = Math.abs(z - array[i].position.z);
+        if (dx < threshold && dy < threshold && dz < threshold) {
+            at = i;
+        }
+    }
+    return at;
+}
+ 
+function equals(atomA, atomB, threshold)
+{
+  if(atomA == 0 || atomB == 0) { return false; }
+  var dx = Math.abs(atomA.position.x - atomB.position.x);
+  var dy = Math.abs(atomA.position.y - atomB.position.y);
+  var dz = Math.abs(atomA.position.z - atomB.position.z);
+  if (dx < threshold && dy < threshold && dz < threshold) {
+        return true; }
+  return false;
+}
+ 
+function animate() {
+  var b;
+    requestAnimationFrame(animate);
+  if(count==0) {}
+  else if (count < 200 && count > 0) {
+    removeBonds(array[0], array[4]);
+    moveMolecule([array[4]], place[6].position.x, place[6].position.y, place[6].position.z, 50);
+  }
+ else if (count < 400 && count > 0) {
+   //scene.remove(b);
+   scene.add(bonds[findBond(array[4], array[1])]);
+  removeBonds(array[0], array[1]);
+    moveMolecule([array[1], array[3], array[4]], 20, 0, 0, 50);
+   updateBond(array[4], array[1]);
+      updateBond(array[3], array[1]);
+  }
+  else if (count < 600 && count > 0) {
+    removeBonds(array[7], array[2]);
+    moveMolecule([array[7]], place[2].position.x, place[2].position.y, place[2].position.z, 50);
+  }
+  else if (count < 800) {
+   scene.add(bonds[findBond(array[7], array[0])]);
+    moveMolecule([array[0]], 2*Math.sqrt(2), 0, 0, 50);
+    moveMolecule([array[2]], -2*Math.sqrt(2), 0, 0, 50);
+    moveMolecule([array[7]], 4*Math.sqrt(2), 2*Math.sqrt(6), 0, 50);
+    moveMolecule([array[6]], -4*Math.sqrt(2), 2*Math.sqrt(6), 0, 50);
+    moveMolecule([array[5]], 4*Math.sqrt(2), -2*Math.sqrt(6), 0, 50);
+    moveMolecule([array[8]], -4*Math.sqrt(2), -2*Math.sqrt(6), 0, 50);
+      updateBond(array[0], array[7]);
+      updateBond(array[0], array[2]);
+      updateBond(array[0], array[5]);
+      updateBond(array[6], array[2]);
+      updateBond(array[8], array[2]);
+  }
+  else if (count < 801) {
+    removeBonds(array[0], array[2]);
+    doubleBondAtom(array[0], array[2], .2, scene);
+  }
+  else if (count < 1000) {}
+  else if (count < 1002) {
+    
+    removeBonds(array[0], array[2]);
+    scene.add(bonds[findBond(array[0], array[2])]);
+  }
+  else if (count < 1200) {
+    
+    moveMolecule([array[0]], 0, 0, 0, 50);
+    moveMolecule([array[2]], place[3].position.x, place[3].position.y, place[3].position.z, 50);
+    moveMolecule([array[7]], place[2].position.x, place[2].position.y, place[2].position.z, 50);
+    moveMolecule([array[6]], place[10].position.x, place[10].position.y, place[10].position.z, 50);
+    moveMolecule([array[5]], place[1].position.x, place[1].position.y, place[1].position.z, 50);
+    moveMolecule([array[8]], place[11].position.x, place[11].position.y, place[11].position.z, 50);
+     
+      updateBond(array[0], array[7]);
+      updateBond(array[0], array[2]);
+      updateBond(array[0], array[5]);
+      updateBond(array[6], array[2]);
+      updateBond(array[8], array[2]);
+  }
+  else if (count < 1300) {
+    removeBonds(array[0], array[2]);
+    scene.add(bonds[findBond(array[0], array[2])]);
+  }
+  else if (count < 1500) {
+    removeBonds(array[7], array[0]);
+    moveMolecule([array[7]], place[9].position.x, place[9].position.y, place[9].position.z, 50);
+  }
+  else if (count < 1700) {
+    scene.add(bonds[findBond(array[7], array[2])]);
+    moveMolecule([array[1], array[3], array[4]], place[0].position.x, place[0].position.y, place[0].position.z, 50);
+   updateBond(array[4], array[1]);
+      updateBond(array[3], array[1]);
+  }
+  else if (count < 1900) {
+    scene.add(bonds[findBond(array[0], array[1])]);
+    removeBonds(array[1], array[4]);
+    moveMolecule([array[4]], place[2].position.x, place[2].position.y, place[2].position.z, 50);
+  }
+  else if (count < 2100) {
+    scene.add(bonds[findBond(array[0], array[4])]);
+  }
+  else if (count < 2400) {
+    count = 1;
+  }
+ // if(camera.position.x != 0){
+    count++;//}
+    controls.update();
+    renderer.render(scene, camera);
+}
