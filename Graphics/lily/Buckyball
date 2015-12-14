@@ -1,0 +1,170 @@
+//buckyball
+var scene, camera;
+var count = 0;
+var array = [];
+var place = [];
+var bonds = [];
+init();
+animate();
+
+function init() {
+  scene = new THREE.Scene();
+  var canvas = $('#canvas3d');
+  renderer = new THREE.WebGLRenderer({
+    canvas: canvas.get(0),
+    antialias: true
+  });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x121224, 1);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+  camera.name = 'camera';
+  scene.add(camera);
+
+  tetrahedronStart(0, 0, -10, 4, .2, 1, scene, 0xff0000);
+  tetrahedron(place[0], array[0], place[2], place[3], place[1], .2, 1, scene, 0xff0000);
+  tetrahedron(place[3], array[0], place[2], place[0], place[1], .2, 1, scene, 0xff0000);
+  tetrahedron(place[2], array[0], place[2], place[0], place[1], .2, 1, scene, 0xff0000);
+  tetrahedron(place[5], array[1], place[4], place[6], place[7], .2, 1, scene, 0xff0000);
+  tetrahedron(place[6], array[1], place[4], place[5], place[7], .2, 1, scene, 0xff0000);
+  tetrahedron(place[9], array[2], place[8], place[10], place[11], .2, 1, scene, 0xff0000);
+  tetrahedron(place[10], array[2], place[8], place[9], place[11], .2, 1, scene, 0xff0000);
+  bondAtom(array[7], array[5], .2, scene); //7
+  tetrahedron(place[18], array[4], place[16], place[17], place[19], .2, 1, scene, 0xff0000);
+  tetrahedron(place[17], array[4], place[16], place[18], place[19], .2, 1, scene, 0xff0000);
+  tetrahedron(place[22], array[5], place[20], place[21], place[23], .2, 1, scene, 0xff0000);
+  bondAtom(array[9], array[3], .2, scene); //10
+  bondAtom(array[10], array[8], .2, scene);
+  tetrahedron(place[26], array[6], place[24], place[25], place[27], .2, 1, scene, 0xff0000);
+  tetrahedron(place[25], array[6], place[24], place[26], place[27], .2, 1, scene, 0xff0000);
+  bondAtom(array[12], array[3], .2, scene);
+  tetrahedron(place[30], array[7], place[28], place[29], place[31], .2, 1, scene, 0xff0000);
+  bondAtom(array[13], array[11], .2, scene);
+  tetrahedron(place[34], array[8], place[32], place[33], place[35], .2, 1, scene, 0xff0000);
+  tetrahedron(place[38], array[9], place[36], place[37], place[39], .2, 1, scene, 0xff0000);
+  bondAtom(array[15], array[14], .2, scene);
+  tetrahedron(place[42], array[10], place[40], place[41], place[43], .2, 1, scene, 0xff0000);
+  bondAtom(array[16], array[13], .2, scene);
+  tetrahedron(place[46], array[11], place[44], place[45], place[47], .2, 1, scene, 0xff0000);
+  tetrahedron(place[50], array[12], place[48], place[49], place[51], .2, 1, scene, 0xff0000);
+  bondAtom(array[17], array[18], .2, scene);
+  bondAtom(array[18], array[15], .2, scene);
+  var last = placeAtom(1, "", (place[58].position.x + place[66].position.x + place[70].position.x) / 3, (place[58].position.y + place[66].position.y + place[70].position.y) / 3, (place[58].position.z + place[66].position.z + place[70].position.z) / 3, scene, 0xff0000);
+  bondAtom(last, array[14], .2, scene);
+  bondAtom(last, array[17], .2, scene);
+  bondAtom(last, array[16], .2, scene);
+
+  var pos = new THREE.Vector3(0, 0, 0);
+  camera.position.set(0, 20, -30);
+  camera.lookAt(pos);
+  controls = new THREE.TrackballControls(camera, renderer.domElement);
+  controls.target.set(pos.x, pos.y, pos.z);
+  var light = new THREE.AmbientLight(0x404040);
+  scene.add(light);
+  var pointLight = new THREE.PointLight(0xffffff, 0.8, 0);
+  camera.add(pointLight);
+  camera = scene.getObjectByName('camera');
+  renderer.render(scene, camera);
+}
+
+function tetrahedron(nC, oC, a1, a2, a3, bond, radius, scene, color) {
+  var x1 = nC.position.x - a1.position.x;
+  var y1 = nC.position.y - a1.position.y;
+  var z1 = nC.position.z - a1.position.z;
+  var x = nC.position.x - oC.position.x;
+  var y = nC.position.y - oC.position.y;
+  var z = nC.position.z - oC.position.z;
+  var side = Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+  var bondLen = Math.sqrt(x * x + y * y + z * z);
+  var height = side * Math.sqrt(2 / 3);
+  var offset = (height * 2 - bondLen) / bondLen;
+
+  var atomA, atomB, atomC, atomD, atomE;
+  if (same(nC, .02) == -1) {
+    atomA = placeAtom(radius, "", nC.position.x, nC.position.y, nC.position.z, scene, color);
+    array = array.concat(atomA);
+  } else {
+    atomB = array[same(nC, .02)];
+  }
+  if (same(oC, .02) == -1) {
+    atomB = placeAtom(radius, "", oC.position.x, oC.position.y, oC.position.z, scene, 0xff0000);
+    array = array.concat(atomB);
+  } else {
+    atomB = array[same(oC, .02)];
+  }
+  atomC = placeAtom(.01, "", a1.position.x + x * offset, a1.position.y + y * offset, a1.position.z + z * offset, scene, 0xff0000);
+  atomD = placeAtom(.01, "", a2.position.x + x * offset, a2.position.y + y * offset, a2.position.z + z * offset, scene, 0xff0000);
+  atomE = placeAtom(.01, "", a3.position.x + x * offset, a3.position.y + y * offset, a3.position.z + z * offset, scene, 0xff0000);
+  bondAtom(atomA, atomB, bond, scene);
+  place = place.concat(atomB, atomC, atomD, atomE);
+}
+
+function tetrahedronStart(x, y, z, size, bond, radius, scene, color) {
+  var zc = 1 / Math.sqrt(2);
+  var atomE = placeAtom(.01, "", x + size * (-1), y, z + size * (-zc), scene, 0xff0000);
+  var atomB = placeAtom(.01, "", x + size * (+1), y, z + size * (-zc), scene, 0xff0000);
+  var atomC = placeAtom(.01, "", x, y + size * (-1), z + size * (+zc), scene, 0xff0000);
+  var atomD = placeAtom(.01, "", x, y + size * (+1), z + size * (+zc), scene, 0xff0000);
+  var atomA = placeAtom(radius, "", x, y, z, scene, color);
+  array = array.concat(atomA);
+  place = place.concat(atomB, atomC, atomD, atomE);
+}
+
+function placeAtom(radius, symbol, xStart, yStart, zStart, scene, color) {
+  var sphere = new THREE.SphereGeometry(radius, 20, 20);
+  var mat = new THREE.MeshPhongMaterial({
+    color: color,
+    side: THREE.DoubleSide
+  });
+  var atom = new THREE.Mesh(sphere, mat);
+  atom.translateX(xStart);
+  atom.translateY(yStart);
+  atom.translateZ(zStart);
+  scene.add(atom);
+  return atom;
+}
+
+function bondAtom(atomA, atomB, thickness, scene) {
+  var x = (atomA.position.x - atomB.position.x);
+  var y = (atomA.position.y - atomB.position.y);
+  var z = (atomA.position.z - atomB.position.z);
+  var height = Math.sqrt((x * x) + (y * y) + (z * z));
+  var geometry = new THREE.CylinderGeometry(thickness, thickness, height);
+  geometry.applyMatrix(new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(90)));
+  var mat = new THREE.MeshPhongMaterial({
+    color: 0xffff00,
+    side: THREE.DoubleSide
+  });
+  var cylinder = new THREE.Mesh(geometry, mat);
+  cylinder.position.x = (atomA.position.x + atomB.position.x) / 2;
+  cylinder.position.y = (atomA.position.y + atomB.position.y) / 2;
+  cylinder.position.z = (atomA.position.z + atomB.position.z) / 2;
+  cylinder.lookAt(atomA.position);
+  scene.add(cylinder);
+  bonds = bonds.concat(atomA, atomB, cylinder, 0, 0);
+  return cylinder;
+}
+
+function same(atom, threshold) {
+  var x = atom.position.x;
+  var y = atom.position.y;
+  var z = atom.position.z;
+  var at = -1;
+  var dx, dy, dz;
+  var i = 0;
+  for (i; i < array.length; i++) {
+    dx = Math.abs(x - array[i].position.x);
+    dy = Math.abs(y - array[i].position.y);
+    dz = Math.abs(z - array[i].position.z);
+    if (dx < threshold && dy < threshold && dz < threshold) {
+      at = i;
+    }
+  }
+  return at;
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  count++;
+  controls.update();
+  renderer.render(scene, camera);
+}
