@@ -1,0 +1,161 @@
+var camera, scene, renderer, controls;
+var e1,e2,e3,e4,e5,e6,e7,e8,center;
+ 
+init();
+animate();
+function atom(x,y,z,radius)
+{
+  this.x = x;
+  this.y = y;
+  this.z = z;
+  this.radius = radius;
+  this.sphere = new THREE.SphereGeometry(radius,200,200);
+  this.material = new THREE.MeshPhongMaterial({
+        color: 0xff0000,
+        side: THREE.DoubleSide
+    });
+  this.display = function(material)
+  {
+  if(material != null)
+    {
+          this.material = material;
+    }
+    this.sphere = new THREE.SphereGeometry(radius,200,200);
+    this.mesh = new THREE.Mesh(this.sphere,this.material);
+    this.mesh.translateX(this.x);
+    this.mesh.translateY(this.y);
+    this.mesh.translateZ(this.z);
+    scene.add(this.mesh);
+  }
+ 
+}
+function bondAtom(atomA,atomB,thickness) {
+    var x = (atomA.position.x-atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    var height = Math.sqrt((x*x)+(y*y)+(z*z));
+    var geometry = new THREE.CylinderGeometry(thickness,thickness,height);
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var cylinder = new THREE.Mesh(geometry,material);
+    cylinder.position.x = (atomA.position.x + atomB.position.x)/2;
+    cylinder.position.y = (atomA.position.y + atomB.position.y)/2;
+    cylinder.position.z = (atomA.position.z + atomB.position.z)/2;
+    cylinder.rotation.z = Math.atan(-x/y);
+    cylinder.rotation.x = Math.atan(z/y);
+    return cylinder;
+}
+// default thickness is 10
+function bond(atomA,atomB)
+{
+  this.atomA = atomA;
+  this.atomB = atomB;
+  this.thickness = 10;
+  this.display = function(thickness)
+  {
+    if(thickness != null)
+      {
+        this.thickness = thickness;
+      }
+    scene.add(bondAtom(this.atomA.mesh,this.atomB.mesh,this.thickness));
+  }
+}
+function molecule(atomList,bondList)
+{
+  this.atomList = atomList;
+  this.bondList = bondList;
+  this.display = function()
+  {
+     for(var i = 0;i<atomList.length;i++)
+       {
+         atomList[i].display();
+       }
+    for(var i = 0;i<bondList.length;i++)
+      {
+        bondList[i].display();
+      }
+  }
+}
+function init() {
+ scene = new THREE.Scene();
+    var canvas = $('#canvas3d');
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas.get(0),
+        antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x121224, 1);
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.name = 'camera';
+    scene.add(camera);
+  
+    center = new atom(0,0,0,40);
+    e1 = new atom(0,0,0,10);
+    e2 = new atom(0,0,0,10);
+    e3 = new atom(0,0,0,10);
+    e4 = new atom(0,0,0,10);
+    e5 = new atom(0,0,0,10);
+    e6 = new atom(0,0,0,10);
+    e7 = new atom(0,0,0,10);
+    e8 = new atom(0,0,0,10);
+    center.display();
+    e1.display();
+    e2.display();
+    e3.display();
+    e4.display();
+    e5.display();
+    e6.display();
+    e7.display();
+    e8.display();
+    
+  var pos = new THREE.Vector3(0, 0, 0);
+    camera.position.set(0, 0, 1000);
+    camera.lookAt(pos);
+    controls = new THREE.TrackballControls(camera, renderer.domElement);
+    controls.target.set(pos.x, pos.y, pos.z);
+    var light = new THREE.AmbientLight(0x404040);
+    scene.add(light);
+    var pointLight = new THREE.PointLight(0xffffff, 0.8, 0);
+    camera.add(pointLight);
+    camera = scene.getObjectByName('camera');
+    renderer.render(scene, camera);
+ 
+}
+var x = 0;
+function animate() {
+    x +=.15;
+    requestAnimationFrame(animate);
+    e1.mesh.position.x = 100 * Math.sin(.6*x);
+    e1.mesh.position.y = -100 * Math.cos(.6*x-.5);
+    e1.mesh.position.z = 100 * Math.sin(.6*x+1);
+ 
+    e2.mesh.position.x = -200 * Math.sin(.65*x);
+    e2.mesh.position.y = 200 * Math.cos(-.65*x);
+    e2.mesh.position.z = 200 * Math.sin(.65*x);
+ 
+    e3.mesh.position.x = 250 * Math.sin(-.7*x);
+    e3.mesh.position.y = -250 * Math.cos(.7*x+1);
+    e3.mesh.position.z = 250 * Math.sin(-.7*x+.5);
+ 
+    e4.mesh.position.x = -275 * -Math.sin(.75*x-1);
+    e4.mesh.position.y = -275 * Math.cos(.75*x+1);
+    e4.mesh.position.z = 275 * -Math.sin(-.75*x);
+ 
+    e5.mesh.position.x = -287.5 * Math.sin(-.8*x);
+    e5.mesh.position.y = 287.5 * -Math.cos(1-.8*x);
+    e5.mesh.position.z = -287.5 * Math.cos(-.8*x);
+ 
+    e6.mesh.position.x = 291.25 * Math.sin(-.85*x);
+    e6.mesh.position.y = -291.25 * -Math.cos(.85*x);
+    e6.mesh.position.z = -291.25 * Math.cos(.85*x);
+ 
+    e7.mesh.position.x = 293.25 * Math.sin(-.9*-x);
+    e7.mesh.position.y = 293.25 * -Math.cos(1-.9*-x);
+    e7.mesh.position.z = -293.25 * Math.cos(-.9*x);
+ 
+    e8.mesh.position.x = 294.25 * Math.sin(.7-x);
+    e8.mesh.position.y = 294.25 * -Math.cos(-.4-x);
+    e8.mesh.position.z = -294.25 * Math.cos(1+x);
+    
+    controls.update();
+    renderer.render(scene, camera);
+}
