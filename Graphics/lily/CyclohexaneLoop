@@ -1,0 +1,170 @@
+//cyclohexane loop
+var scene, camera;
+var atom1, atom2, atom3, atom4, atom5, atom6, bond1, bond2, bond3, bond4, bond5, bond6, bond7, bond8;
+var count = 0;
+var zc = Math.sqrt(3);
+var yc = 3 * Math.sqrt(3);
+
+init();
+animate();
+
+function init() {
+    scene = new THREE.Scene();
+    var canvas = $('#canvas3d');
+
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas.get(0),
+        antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x121224, 1);
+
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.name = 'camera';
+    scene.add(camera);
+
+    atom1 = placeAtom(1, "C1", 6, 0, zc, scene);
+    atom2 = placeAtom(1, "C2", 3, yc, -zc, scene);
+    atom3 = placeAtom(1, "C3", -3, yc, zc, scene);
+    atom4 = placeAtom(1, "C4", -6, 0, -zc, scene);
+    atom5 = placeAtom(1, "C5", -3, -yc, zc, scene);
+    atom6 = placeAtom(1, "C6", 3, -yc, -zc, scene);
+    
+    bond1 = bondAtom(atom1, atom2, .2, scene);
+    bond2 = bondAtom(atom2, atom3, .2, scene);
+    bond6 = bondAtom(atom6, atom1, .2, scene);
+    bond3 = bondAtom(atom3, atom4, .2, scene);
+    bond4 = bondAtom(atom4, atom5, .2, scene);
+    bond5 = bondAtom(atom5, atom6, .2, scene);
+
+    var pos = new THREE.Vector3(0, 0, 0);
+    camera.position.set(pos.x, pos.y, pos.z + 20);
+    camera.lookAt(pos);
+
+    controls = new THREE.TrackballControls(camera, renderer.domElement);
+    controls.target.set(pos.x, pos.y, pos.z);
+
+    var light = new THREE.AmbientLight(0x404040);
+    scene.add(light);
+
+    var pointLight = new THREE.PointLight(0xffffff, 0.8, 0);
+    camera.add(pointLight);
+    camera = scene.getObjectByName('camera');
+    renderer.render(scene, camera);
+}
+
+function placeAtom(radius, symbol, xStart, yStart, zStart, scene) {
+    var sphere = new THREE.SphereGeometry(radius, 20, 20);
+    var mat = new THREE.MeshPhongMaterial({
+        color: 0xff0000,
+        side: THREE.DoubleSide
+    });
+    var atom = new THREE.Mesh(sphere, mat);
+    atom.translateX(xStart);
+    atom.translateY(yStart);
+    atom.translateZ(zStart);
+    scene.add(atom);
+    return atom;
+}
+
+function bondAtom(atomA, atomB, thickness, scene) {
+    var x = (atomA.position.x - atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    var height = Math.sqrt((x * x) + (y * y) + (z * z));
+    var geometry = new THREE.CylinderGeometry(thickness, thickness, height);
+    var mat = new THREE.MeshPhongMaterial({
+        color: 0xffff00,
+        side: THREE.DoubleSide
+    });
+    var cylinder = new THREE.Mesh(geometry, mat);
+    cylinder.position.x = (atomA.position.x + atomB.position.x) / 2;
+    cylinder.position.y = (atomA.position.y + atomB.position.y) / 2;
+    cylinder.position.z = (atomA.position.z + atomB.position.z) / 2;
+    cylinder.rotation.z = Math.atan(-x/y);
+    if (y != 0)
+        cylinder.rotation.x = Math.atan(z/y);
+    else
+        cylinder.rotation.y = Math.atan(-z/x);
+    scene.add(cylinder);
+    return cylinder;
+}
+
+function moveAtom(atom,EpositionX,EpositionY,EpositionZ,resistance)
+{
+
+    if(atom.position.x != EpositionX)
+    {
+        atom.position.x += (EpositionX-atom.position.x)/(resistance);
+    }
+    if(atom.position.y !=EpositionY)
+    {
+        atom.position.y += (EpositionY-atom.position.y)/(resistance);
+    }
+    if(atom.position.z != EpositionZ)
+    {
+        atom.position.z +=(EpositionZ-atom.position.z)/(resistance);
+    }
+}
+
+function moveMolecule(species, EpositionX, EpositionY, resistance) {
+    if (species[0].position.x != EpositionX) {
+        for (var i = 0; i < species.length; i++) {
+            species[i].position.x += (EpositionX - species[0].position.x) / (resistance);
+        }
+    }
+    if (species[0].position.y != EpositionY) {
+        for (var i = 0; i < species.length; i++) {
+            species[i].position.y += (EpositionY - species[0].position.y) / (resistance);
+        }
+    }
+}
+
+function updateBond(atomA,atomB,bond)
+{
+    var x = (atomA.position.x-atomB.position.x);
+    var y = (atomA.position.y - atomB.position.y);
+    var z = (atomA.position.z - atomB.position.z);
+    bond.position.x = (atomA.position.x + atomB.position.x)/2;
+    bond.position.y = (atomA.position.y + atomB.position.y)/2;
+    bond.position.z = (atomA.position.z + atomB.position.z)/2;
+    bond.rotation.z = Math.atan(-x/y);
+    bond.rotation.x = Math.atan(z/y);
+}
+
+
+function animate() {
+    requestAnimationFrame(animate);
+    
+    
+	if (count/200 < 2) {
+    	moveAtom(atom1, Math.sqrt(3), 0, -yc-1, 80);
+        updateBond(atom1, atom6, bond6);
+        updateBond(atom1, atom2, bond1);
+    	count++;
+    }
+    else if (count/200 < 4) {
+        moveAtom(atom4, -Math.sqrt(3), 0, yc + 1, 80);
+        updateBond(atom4, atom5, bond4);
+        updateBond(atom4, atom3, bond3);
+        count++;
+    }
+    else if (count/200 < 6) {
+        moveAtom(atom1, 6, 0, zc, 80);
+        updateBond(atom1, atom2, bond1);
+        updateBond(atom6, atom1, bond6);
+        count++;
+    }
+    else if (count/200 < 8) {
+        moveAtom(atom4, -6, 0, -zc, 80);
+        updateBond(atom4, atom5, bond4);
+        updateBond(atom4, atom3, bond3);
+        count++;
+    }
+    else {
+        count = 0;
+    }
+        
+    controls.update();
+    renderer.render(scene, camera);
+}
